@@ -12,7 +12,7 @@
 		#size-cells = <1>;
 		ranges;
 
-		bootargs = "console=ttyS0,115200 rootwait init=/preinit root=/dev/mtdblock2 rootfstype=squashfs overlayfsdev=/dev/mtdblock3";
+		bootargs = "console=ttyS0,115200 rootwait ubi.mtd=0 root=/dev/ubi0:rootfs rootfstype=ubifs loglevel=8 init=/preinit ofsdev=ubi0:rootfs_data ofstype=ubifs";
 	};
 
 	lcd: framebuffer-lcd {
@@ -59,11 +59,17 @@
 			};
 
 			partition@3 {
-				label = "ubifs";
+				label = "ubi";
 				reg = <0x800000 0x7800000>;
 			};
 		};
 	};
+};
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_pins_a>;
+	status = "okay";
 };
 
 &uart1 {
@@ -82,7 +88,7 @@
 };
 
 &usb_otg {
-	dr_mode = "otg";
+	dr_mode = "peripheral"; /* host peripheral */
 	status = "okay";
 };
 
@@ -99,7 +105,6 @@
 };
 
 &codec {
-	status = "disabled";
 	allwinner,audio-routing =
 		"Headphone", "HP",
 		"Headphone", "HPCOM",
@@ -107,6 +112,7 @@
 		"FMINL", "Left FM In",
 		"FMINR", "Right FM In",
 		"MIC", "Mic";
+	status = "okay";
 };
 
 &i2c0 {
@@ -123,67 +129,5 @@
 		pendown-gpio = <&pio 4 12 GPIO_ACTIVE_LOW>;
 		ti,x-plate-ohms = <660>;
 		wakeup-source;
-		status = "disabled";
-	};
-
-	ov2640: camera@30 {
-		compatible = "ovti,ov2640";
-		reg = <0x30>;
-		pinctrl-0 = <&clk_out_pins>;
-		pinctrl-names = "default";
-		clocks = <&clk_out>;
-		clock-names = "xvclk";
-		assigned-clocks = <&clk_out>;
-		assigned-clock-rates = <24000000>;
-		status = "disabled";
-
-		port {
-			ov2640_ep: endpoint {
-				remote-endpoint = <&csi0_ep>;
-				bus-width = <8>;
-				hsync-active = <0>;
-				vsync-active = <0>;
-				pclk-sample = <1>;
-			};
-		};
-	};
-
-	ov5640: camera@3c {
-		compatible = "ovti,ov5640";
-		reg = <0x3c>;
-		pinctrl-0 = <&clk_out_pins>;
-		pinctrl-names = "default";
-		clocks = <&clk_out>;
-		clock-names = "xclk";
-		assigned-clocks = <&clk_out>;
-		assigned-clock-rates = <24000000>;
-		status = "disabled";
-
-		port {
-			ov5640_ep: endpoint {
-				remote-endpoint = <&csi0_ep>;
-				bus-width = <8>;
-				hsync-active = <0>;
-				vsync-active = <0>;
-				pclk-sample = <1>;
-			};
-		};
-	};
-};
-
-&csi0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&csi0_pins>;
-	packed-format;
-	status = "disabled";
-
-	port {
-		csi0_ep: endpoint {
-			remote-endpoint = <&ov2640_ep>;
-			bus-width = <8>;
-			hsync-active = <0>;
-			vsync-active = <0>;
-			pclk-sample = <1>;
-		};
 	};
 };

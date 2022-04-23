@@ -5,8 +5,7 @@
 
 / {
 	model = "LCtech Pi F1C200s";
-	compatible = "allwinner,suniv-f1c200s",
-			 "allwinner,suniv-f1c100s";
+	compatible = "allwinner,suniv-f1c200s", "allwinner,suniv-f1c100s";
 
 	chosen {
 		#address-cells = <1>;
@@ -25,29 +24,12 @@
 			 <&ccu CLK_TCON>;
 		status = "disabled";
 	};
-
-	// panel: panel {
-	// 	compatible = "bananapi,s070wv20-ct16", "simple-panel";
-	// 	#address-cells = <1>;
-	// 	#size-cells = <0>;
-
-	// 	port@0 {
-	// 		reg = <0>;
-	// 		#address-cells = <1>;
-	// 		#size-cells = <0>;
-
-	// 		panel_input: endpoint@0 {
-	// 			reg = <0>;
-	// 			remote-endpoint = <&tcon0_out_lcd>;
-	// 		};
-	// 	};
-	// };
 };
 
 &spi0 {
 	status = "okay";
 
-	nand0: flash@1 {
+	nand0: flash@0 {
 		#address-cells = <1>;
 		#size-cells = <1>;
 		compatible = "spi-nand";
@@ -73,12 +55,12 @@
 
 			partition@2 {
 				label = "kernel";
-				reg = <0x100000 0xf00000>;
+				reg = <0x100000 0x700000>;
 			};
 
 			partition@3 {
 				label = "ubifs";
-				reg = <0x1000000 0x6e00000>;
+				reg = <0x800000 0x7800000>;
 			};
 		};
 	};

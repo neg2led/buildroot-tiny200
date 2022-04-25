@@ -4,8 +4,14 @@
 #include "suniv-f1c100s.dtsi"
 
 / {
-	model = "LCtech Pi F1C200s";
-	compatible = "allwinner,suniv-f1c200s", "allwinner,suniv-f1c100s";
+	model = "LCTech Cherry Pi";
+	compatible = "lctech,cherrypi", "allwinner,suniv-f1c200s", "allwinner,suniv-f1c100s";
+
+	aliases {
+		serial0 = &uart1;
+		spi0 = &spi0;
+		spi1 = &spi1;
+	};
 
 	chosen {
 		#address-cells = <1>;
@@ -66,12 +72,6 @@
 	};
 };
 
-&uart0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart0_pins_a>;
-	status = "okay";
-};
-
 &uart1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart1_pa_pins>;
@@ -88,8 +88,11 @@
 };
 
 &usb_otg {
-	dr_mode = "peripheral"; /* host peripheral */
 	status = "okay";
+	dr_mode = "peripheral";
+
+
+
 };
 
 &usbphy {
@@ -105,6 +108,7 @@
 };
 
 &codec {
+	status = "okay";
 	allwinner,audio-routing =
 		"Headphone", "HP",
 		"Headphone", "HPCOM",
@@ -112,22 +116,10 @@
 		"FMINL", "Left FM In",
 		"FMINR", "Right FM In",
 		"MIC", "Mic";
-	status = "okay";
 };
 
 &i2c0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0_pd_pins>;
 	status = "okay";
-
-	rtp@48 {
-		compatible = "ti,tsc2007";
-		reg = <0x48>;
-		interrupt-parent = <&pio>;
-		interrupts = <4 12 IRQ_TYPE_EDGE_FALLING>;
-		gpios = <&pio 4 12 GPIO_ACTIVE_LOW>;
-		pendown-gpio = <&pio 4 12 GPIO_ACTIVE_LOW>;
-		ti,x-plate-ohms = <660>;
-		wakeup-source;
-	};
 };

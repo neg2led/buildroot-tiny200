@@ -365,31 +365,43 @@
 				function = "pwm1";
 			};
 
-			spi0_pins: spi0-pins {
+			/* CS, CLK, MISO, MOSI */
+			spi0_pc_pins: spi0-pc-pins {
 				pins = "PC0", "PC1", "PC2", "PC3";
 				function = "spi0";
-				bias-pull-up;
 			};
 
-			mmc0_pins: mmc0-pins {
-				pins = "PF0", "PF1", "PF2", "PF3", "PF4", "PF5";
+			spi1_pa_pins: spi1-pa-pins {
+				pins = "PA0", "PA1", "PA2", "PA3";
+				function = "spi1";
+			};
+
+			spi1_pe_pins: spi1-pe-pins {
+				pins = "PE7", "PE9", "PE8", "PE10";
+				function = "spi1";
+			};
+
+			/* CLK, CMD, D0, [D1, D2, D3] */
+			mmc0_pf_pins: mmc0-pf-pins {
+				pins = "PF2", "PF3", "PF1", "PF0", "PF4", "PF5";
 				function = "mmc0";
 				bias-pull-up;
 			};
 
-			mmc1_pins: mmc1-pins {
+			mmc1_pc_pins: mmc2-pc-pins {
 				pins = "PC0", "PC1", "PC2";
 				function = "mmc1";
 				bias-pull-up;
 			};
 
-			i2c0_pe_pins: i2c0-pe-pins {
-				pins = "PE11", "PE12";
+			/* SCL, SDA */
+			i2c0_pd_pins: i2c0-pd-pins {
+				pins = "PD12", "PD0";
 				function = "i2c0";
 			};
 
-			i2c0_pd_pins: i2c0-pd-pins {
-				pins = "PD0", "PD12";
+			i2c0_pe_pins: i2c0-pe-pins {
+				pins = "PE11", "PE12";
 				function = "i2c0";
 			};
 
@@ -398,12 +410,22 @@
 				function = "i2c1";
 			};
 
+			i2c2_pd_pins: i2c1-pd-pins {
+				pins = "PD15", "PD16";
+				function = "i2c1";
+			};
+
+			i2c2_pe_pins: i2c1-pd-pins {
+				pins = "PE0", "PE1";
+				function = "i2c1";
+			};
+
 			csi0_pins: csi0-pins {
 				pins = "PE0", "PE1", "PE2", "PE3", "PE4", "PE5",
 					"PE6","PE7", "PE8", "PE9", "PE10";
 				function = "csi";
 			};
-			
+
 			clk_out_pins: clk-out-pins {
 				pins = "PE11";
 				function = "clk0";
@@ -417,7 +439,7 @@
 
 			lcd_rgb565_pins: lcd-rgb565-pins {
 				pins = "PD1", "PD2", "PD3", "PD4", "PD5",
-					"PD6", "PD7", "PD8", "PD9", "PD10", "PD11", 
+					"PD6", "PD7", "PD8", "PD9", "PD10", "PD11",
 					"PD13", "PD14", "PD15", "PD16", "PD17",
 					"PD18", "PD19", "PD20", "PD21";
 				function = "lcd";
@@ -484,7 +506,7 @@
 				 <&ccu CLK_CODEC>;
 			clock-names = "apb", "codec";
 			resets = <&ccu RST_BUS_CODEC>;
-			dmas = <&dma SUN4I_DMA_NORMAL 0x0c>, 
+			dmas = <&dma SUN4I_DMA_NORMAL 0x0c>,
 				 <&dma SUN4I_DMA_NORMAL 0x0c>;
 			dma-names = "rx", "tx";
 			status = "disabled";

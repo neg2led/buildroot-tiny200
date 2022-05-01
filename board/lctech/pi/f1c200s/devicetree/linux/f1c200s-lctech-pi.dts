@@ -33,6 +33,8 @@
 };
 
 &spi0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi0_pc_pins>;
 	status = "okay";
 
 	nand0: flash@0 {
@@ -72,6 +74,12 @@
 	};
 };
 
+&spi1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pe_pins>;
+
+};
+
 &uart1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart1_pa_pins>;
@@ -90,9 +98,6 @@
 &usb_otg {
 	status = "okay";
 	dr_mode = "peripheral";
-
-
-
 };
 
 &usbphy {

@@ -17,12 +17,12 @@ cp ${BOARDDIR}/scripts/${IMAGE_ITS} "${BINARIES_DIR}"
 cd "${BINARIES_DIR}" && "${MKIMAGE}" -f ${IMAGE_ITS} ${OUTPUT_NAME} && rm ${IMAGE_ITS}
 
 cd "${STARTDIR}/"
-board/allwinner/generic/scripts/mknanduboot.sh ${1}/${2} ${1}/u-boot-sunxi-with-nand-spl.bin
+${BOARDDIR}/scripts/mknanduboot.sh ${1}/${2} ${1}/u-boot-sunxi-with-nand-spl.bin
 
 [[ -f "${BINARIES_DIR}/rootfs.ext4" ]] && \
     support/scripts/genimage.sh ${1} -c ${BOARDDIR}/scripts/genimage-sdcard-ext4.cfg
-[[ -f "${BINARIES_DIR}/rootfs.f2fs" ]] && \
-    support/scripts/genimage.sh ${1} -c ${BOARDDIR}/scripts/genimage-sdcard-f2fs.cfg
+# [[ -f "${BINARIES_DIR}/rootfs.f2fs" ]] && \
+#     support/scripts/genimage.sh ${1} -c ${BOARDDIR}/scripts/genimage-sdcard-f2fs.cfg
 [[ -f "${BINARIES_DIR}/rootfs.squashfs" ]] && \
     support/scripts/genimage.sh ${1} -c ${BOARDDIR}/scripts/genimage-nand-squashfs.cfg
 [[ -f "${BINARIES_DIR}/rootfs.ubi" ]] && \
